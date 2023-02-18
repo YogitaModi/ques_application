@@ -127,11 +127,12 @@ let second2 = document.getElementById('second');
 let third2 = document.getElementById('third');
 let fourth2 = document.getElementById('fourth');
 let result = document.getElementById('declaration')
-let sub = document.getElementById('sub')
+let sub = document.getElementById('submit')
+let warn = document.getElementsByClassName('warning')
 
 //for changing the question on page forward count
 let count = 0;
-let miner = modernArt.length;
+
 const counter =  function(){
     count < modernArt.length && (count+=1) ;
 
@@ -142,11 +143,11 @@ const counter =  function(){
     fourthLabel.innerHTML=modernArt[count].fourth;
   
 }
-changeQues.addEventListener('click', counter)
 
 
 
 // reverse of question count
+let miner = modernArt.length;
 const pre = function(){
 
     miner>0  && (miner-=1)
@@ -160,46 +161,84 @@ const pre = function(){
 }
 previousQues.addEventListener('click', pre)
 
-changeQues.addEventListener('click',uncheck)
+
 
 
 
 let marks =0;
-const evaluvate = function(){
-  let a = 0;
+let a = -1;
+const evaluvate = ()=>{
+  
     a < modernArt.length && (a+=1)
-    if (first2.checked  && (modernArt[a].first === modernArt[a].answer)){
+   
+    if (first2.checked  && (modernArt[a]['first'] === modernArt[a]['answer'])){
          marks+=1
          result.innerHTML= marks+'/10'
          
+      }else{
+        marks+=0
+        result.innerHTML= marks+'/10'
       }
 
-    else if (second2.checked  && (modernArt[a].second === modernArt[a].answer)){
+    if (second2.checked  && (modernArt[a]['second'] === modernArt[a]['answer'])){
         marks+=1
         result.innerHTML= marks+'/10'
         
     }
+  else{
+    marks+=0
+    result.innerHTML= marks+'/10'
+  }
     
 
-    else if (third2.checked  && (modernArt[a].third === modernArt[a].answer)){
+    if (third2.checked  && (modernArt[a]['third'] === modernArt[a]['answer'])){
         marks+=1  
         result.innerHTML= marks+'/10'
     
+      }else{
+        marks+=0
+        result.innerHTML= marks+'/10'
       }
 
-    else if(fourth2.checked  && (modernArt[a].fourth === modernArt[a].answer)){
+    if(fourth2.checked  && (modernArt[a]['fourth'] === modernArt[a]['answer'])){
     
         
           marks+=1
           result.innerHTML= marks+'/10'
          
         
+        }else{
+          marks+=0
+          result.innerHTML= marks+'/10'
+        }
+
+    
+  }
+
+function showGrade(){
+  console.log(a, marks)
+  if (a=== modernArt.length-1){
+    if(marks>5){
+      result.innerHTML= `<button>Replay</button> your grade is "good"`
+      
+    }
+    else{
+      result.innerHTML= `<button onClick= location.reload()>Replay</button> your grade is "bad"`
+    }
+  }
 }
 
-}
+changeQues.addEventListener('click', evaluvate)
 
-sub.addEventListener('click', evaluvate)
 
+
+changeQues.addEventListener('click', counter)
+
+
+changeQues.addEventListener('click',uncheck)
+sub.addEventListener('click',showGrade)
+
+    
 
 
 
