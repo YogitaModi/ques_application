@@ -110,11 +110,21 @@ const modernArt = [
 
      
       
+    },
+    {
+      
+      question: "",
+      first: "",
+      second: "",
+      third: "",
+      fourth: "",
+      answer: "",
+
+     
+      
     }
   ];
   
-
-
 let quesStatement = document.getElementById('ques');
 let changeQues = document.getElementById('next');
 let previousQues = document.getElementById('previous')
@@ -130,123 +140,121 @@ let result = document.getElementById('declaration')
 let sub = document.getElementById('submit')
 let warn = document.getElementsByClassName('warning')
 
-//for changing the question on page forward count
-let count = 0;
-
-const counter =  function(){
-    count < modernArt.length && (count+=1) ;
-
-    quesStatement.innerHTML = modernArt[count].question;
-    firstLabel.innerHTML =modernArt[count].first;
-    secondLabel.innerHTML = modernArt[count].second;
-    thirdLabel.innerHTML= modernArt[count].third;
-    fourthLabel.innerHTML=modernArt[count].fourth;
-  
-}
 
 
 
-// reverse of question count
-let miner = modernArt.length;
-const pre = function(){
-
-    miner>0  && (miner-=1)
-
-    quesStatement.innerHTML = modernArt[miner].question;
-    firstLabel.innerHTML =modernArt[miner].first;
-    secondLabel.innerHTML = modernArt[miner].second;
-    thirdLabel.innerHTML= modernArt[miner].third;
-    fourthLabel.innerHTML=modernArt[miner].fourth;
+let marks=0;
+function quesChange(ques){
+    quesStatement.innerHTML= ques.question;
+    firstLabel.innerHTML=ques.first;
+    secondLabel.innerHTML=ques.second;
+    thirdLabel.innerHTML=ques.third;
+    fourthLabel.innerHTML=ques.fourth;
     
-}
-previousQues.addEventListener('click', pre)
-
-
-
-
-
-let marks =0;
-let a = -1;
-const evaluvate = ()=>{
-  
-    a < modernArt.length && (a+=1)
    
-    if (first2.checked  && (modernArt[a]['first'] === modernArt[a]['answer'])){
-         marks+=1
-         result.innerHTML= marks+'/10'
-         
-      }else{
-        marks+=0
-        result.innerHTML= marks+'/10'
-      }
+}
 
-    if (second2.checked  && (modernArt[a]['second'] === modernArt[a]['answer'])){
+
+function evaluvation(a){
+  console.log(a)
+    if (first2.checked && a.first === a.answer){
         marks+=1
-        result.innerHTML= marks+'/10'
+        result.innerHTML=marks
         
     }
-  else{
-    marks+=0
-    result.innerHTML= marks+'/10'
-  }
-    
+    else if (second2.checked && a.second === a.answer){
 
-    if (third2.checked  && (modernArt[a]['third'] === modernArt[a]['answer'])){
-        marks+=1  
-        result.innerHTML= marks+'/10'
-    
-      }else{
-        marks+=0
-        result.innerHTML= marks+'/10'
-      }
+        marks+=1
+        result.innerHTML=marks
+    }
+    else if (third2.checked && a.third===a.answer){
+        marks+=1
+        result.innerHTML=marks
 
-    if(fourth2.checked  && (modernArt[a]['fourth'] === modernArt[a]['answer'])){
-    
-        
-          marks+=1
-          result.innerHTML= marks+'/10'
-         
-        
-        }else{
-          marks+=0
-          result.innerHTML= marks+'/10'
-        }
+    }
+    else if (fourth2.checked && a.fourth=== a.answer){
+        marks+=1
+        result.innerHTML=marks
 
-    
-  }
-
-function showGrade(){
-  console.log(a, marks)
-  if (a=== modernArt.length-1){
-    if(marks>5){
-      result.innerHTML= `<button>Replay</button> your grade is "good"`
-      
     }
     else{
-      result.innerHTML= `<button onClick= location.reload()>Replay</button> your grade is "bad"`
+        marks+=0
     }
-  }
+   return marks
 }
-
-changeQues.addEventListener('click', evaluvate)
-
-
-
-changeQues.addEventListener('click', counter)
-
-
-changeQues.addEventListener('click',uncheck)
-sub.addEventListener('click',showGrade)
-
-    
-
-
-
-
 function uncheck(){
+  
     first2.checked = false;
     second2.checked=false;
     third2.checked=false;
     fourth2.checked=false;
-
+    
 }
+let i=0;
+function provideQues(){
+  
+    i<modernArt.length && i++
+    console.log(i)
+    let a = quesChange(modernArt[i])
+    let b = evaluvation(modernArt[i-1])
+    let c = uncheck()
+
+    if (i === modernArt.length-1){
+     
+      changeQues.removeEventListener('click',provideQues);
+      let remark;
+      
+      if (marks>5){
+        remark="good job"
+      }else{
+        remark="work hard"
+      }
+      
+      document.getElementById('Page').innerHTML=`Your score is ${marks}/10 and your remark is ${remark} <button><a href="index.html" style="text-decoration:none;color:black;">Home</a> </button>`
+      
+      
+    }
+  
+}
+
+changeQues.addEventListener('click', provideQues)
+
+
+// let time2 = new Date("Feb 20, 2023 24:00:00").getTime();
+// let x = setInterval(()=>{
+  
+//   let time1 = new Date().getTime();
+  
+//   let diff = time2-time1;
+ 
+//   let hour = Math.floor(((diff)%(24*60*60*1000))/(60*60*1000))
+//  let min = Math.floor(((diff)%(60*60*1000))/(60*1000))
+//   let sec = Math.floor(((diff)%(60*1000))/(1000))
+  
+//   document.getElementById('time').innerHTML = hour + "h "
+//   + min + "m " + sec + "s ";
+
+// if (diff<0){
+//   clearInterval(x);
+//   document.getElementById('time').innerHTML= "Times up!!!"
+//   quesStatement.innerHTML= " ";
+//     firstLabel.innerHTML=" ";
+//     secondLabel.innerHTML=" ";
+//     thirdLabel.innerHTML=" ";
+//     fourthLabel.innerHTML=" ";
+//     changeQues.removeEventListener('click',provideQues);
+//     result.innerHTML= `${marks}/10 <button onClick=location.reload()> Replay </button>`
+//     document.body.querySelectorAll('#Page').style.backgroundColor="white";
+//     quesStatement.style.backgroundColor="bisque";
+// }
+
+// },1000)
+
+
+
+
+
+
+
+
+
